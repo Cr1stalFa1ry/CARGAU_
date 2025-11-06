@@ -58,6 +58,10 @@
               "target": "Package",
               "version": "[15.1.0, )"
             },
+            "BCrypt.Net-Next": {
+              "target": "Package",
+              "version": "[4.0.3, )"
+            },
             "MediatR": {
               "target": "Package",
               "version": "[13.1.0, )"

@@ -5,6 +5,7 @@ using Application.Cars.Commands.CreateCar;
 using Application.Cars.Queries.GetServicesByCar;
 using Application.Cars.Queries.GetCar;
 using Application.Cars.Queries.GetCars;
+using Application.Cars.Commands.UpdatePriceCar;
 
 namespace CARGAU.Controllers;
 
@@ -52,6 +53,15 @@ public class CarsController : ControllerBase
         var listServices = await _mediator.Send(new GetServicesByCarQuery(id), cancellationToken);
 
         return Results.Ok(listServices);
+    }
+
+    [HttpPatch("update-price-car")]
+    public async Task<IResult> UpdatePriceCar(
+        UpdatePriceCarCommand request,
+        CancellationToken cancellationToken)
+    {
+        await _mediator.Send(request, cancellationToken);
+        return Results.NoContent();
     }
 
     [HttpDelete("{id:guid}")]

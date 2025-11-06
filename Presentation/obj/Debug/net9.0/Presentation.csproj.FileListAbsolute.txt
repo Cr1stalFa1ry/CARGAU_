@@ -10,3 +10,8 @@ C:\Users\User\Desktop\CS\WEB\pet-project-2\Presentation\obj\Debug\net9.0\Present
 C:\Users\User\Desktop\CS\WEB\pet-project-2\Presentation\obj\Debug\net9.0\refint\Presentation.dll
 C:\Users\User\Desktop\CS\WEB\pet-project-2\Presentation\obj\Debug\net9.0\Presentation.pdb
 C:\Users\User\Desktop\CS\WEB\pet-project-2\Presentation\obj\Debug\net9.0\ref\Presentation.dll
+C:\Users\User\Desktop\CS\WEB\pet-project-2\Presentation\bin\Debug\net9.0\Application.dll
+C:\Users\User\Desktop\CS\WEB\pet-project-2\Presentation\bin\Debug\net9.0\Domain.dll
+C:\Users\User\Desktop\CS\WEB\pet-project-2\Presentation\bin\Debug\net9.0\Application.pdb
+C:\Users\User\Desktop\CS\WEB\pet-project-2\Presentation\bin\Debug\net9.0\Domain.pdb
+C:\Users\User\Desktop\CS\WEB\pet-project-2\Presentation\obj\Debug\net9.0\Presenta.BC777DBE.Up2Date

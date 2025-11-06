@@ -10,4 +10,6 @@ public interface ITuningStudioDbContext
     public DbSet<OrderEntity> Orders { get; set; }
     public DbSet<UserEntity> Users { get; set; }
     public DbSet<RoleEntity> Roles { get; set; }
+
+    Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }
