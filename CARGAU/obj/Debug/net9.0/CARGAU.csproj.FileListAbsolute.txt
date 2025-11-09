@@ -151,3 +151,4 @@ C:\Users\User\Desktop\CS\WEB\pet-project-2\CARGAU\bin\Debug\net9.0\Microsoft.Ide
 C:\Users\User\Desktop\CS\WEB\pet-project-2\CARGAU\bin\Debug\net9.0\System.IdentityModel.Tokens.Jwt.dll
 C:\Users\User\Desktop\CS\WEB\pet-project-2\CARGAU\bin\Debug\net9.0\Presentation.dll
 C:\Users\User\Desktop\CS\WEB\pet-project-2\CARGAU\bin\Debug\net9.0\Presentation.pdb
+C:\Users\User\Desktop\CS\WEB\pet-project-2\CARGAU\obj\Debug\net9.0\CARGAU.sourcelink.json

@@ -8,18 +8,18 @@ using Domain.Models.User;
 using Domain.Entities;
 using AutoMapper;
 
-namespace Application.Users.Commands.CreateNewUser;
+namespace Application.Users.Commands.RegisterUser;
 
-public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, (string, string)>
+public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand, (string, string)>
 {
     private readonly ITuningStudioDbContext _context;
     private readonly IPasswordHasher _passwordHasher;
     private readonly IJwtProvider _jwtProvider;
     private readonly IMapper _mapper;
     private readonly ILogger _logger;
-    public CreateUserCommandHandler(
+    public RegisterUserCommandHandler(
         ITuningStudioDbContext context,
-        ILogger<CreateUserCommandHandler> logger,
+        ILogger<RegisterUserCommandHandler> logger,
         IPasswordHasher passwordHasher,
         IJwtProvider jwtProvider,
         IMapper mapper)
@@ -31,7 +31,7 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, (stri
         _mapper = mapper;
     }
 
-    public async Task<(string, string)> Handle(CreateUserCommand request, CancellationToken cancellationToken)
+    public async Task<(string, string)> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
     {
         var passwordHash = _passwordHasher.Generate(request.Password);
         var user = User.Create(Guid.NewGuid(), request.UserName, request.Email, (Roles)request.Role);

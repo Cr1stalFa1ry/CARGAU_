@@ -5,17 +5,23 @@ using Infrastructure.Context;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using AutoMapper;
 
 namespace Infrastructure.Repositories;
 
 public class CarRepository : ICarRepository
 {
     private readonly TuningStudioDbContext _context;
+    private readonly IMapper _mapper;
     private readonly ILogger _logger;
-    public CarRepository(TuningStudioDbContext context, ILogger<CarRepository> logger)
+    public CarRepository(
+        TuningStudioDbContext context,
+        ILogger<CarRepository> logger,
+        IMapper mapper)
     {
         _logger = logger;
         _context = context;
+        _mapper = mapper;
     }
     public async Task Add(Car car, CancellationToken cancellationToken)
     {
@@ -38,7 +44,7 @@ public class CarRepository : ICarRepository
         {
             var res = await _context.Cars
                 .Where(car => car.Id == id)
-                .ExecuteDeleteAsync();
+                .ExecuteDeleteAsync(cancellationToken);
         }
         catch (ArgumentNullException ex)
         {
@@ -62,7 +68,7 @@ public class CarRepository : ICarRepository
                 .OrderBy(car => car.Id)
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize)
-                .ToListAsync();
+                .ToListAsync(cancellationToken);
 
             var carList = entityList
                 .Select(car =>
@@ -144,12 +150,12 @@ public class CarRepository : ICarRepository
                 .Include(order => order.SelectedServices)
                 .Where(order => order.CarId == id)
                 .SelectMany(order => order.SelectedServices)
-                .ToListAsync();
+                .ToListAsync(cancellationToken);
 
             if (serviceEntities.Count == 0)
                 return new List<Service>();
 
-            var mappedServices = new List<Service>();
+            var mappedServices = serviceEntities.Select(_mapper.Map<Service>).ToList();
 
             return mappedServices;
         }

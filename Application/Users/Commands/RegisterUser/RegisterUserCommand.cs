@@ -1,9 +1,9 @@
 using MediatR;
 using Domain.Models.User;
 
-namespace Application.Users.Commands.CreateNewUser;
+namespace Application.Users.Commands.RegisterUser;
 
-public record class CreateUserCommand(
+public record class RegisterUserCommand(
     string UserName,
     string Email,
     string Password,

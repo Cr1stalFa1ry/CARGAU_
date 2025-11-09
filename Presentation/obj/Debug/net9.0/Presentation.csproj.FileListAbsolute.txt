@@ -15,3 +15,4 @@ C:\Users\User\Desktop\CS\WEB\pet-project-2\Presentation\bin\Debug\net9.0\Domain.
 C:\Users\User\Desktop\CS\WEB\pet-project-2\Presentation\bin\Debug\net9.0\Application.pdb
 C:\Users\User\Desktop\CS\WEB\pet-project-2\Presentation\bin\Debug\net9.0\Domain.pdb
 C:\Users\User\Desktop\CS\WEB\pet-project-2\Presentation\obj\Debug\net9.0\Presenta.BC777DBE.Up2Date
+C:\Users\User\Desktop\CS\WEB\pet-project-2\Presentation\obj\Debug\net9.0\Presentation.sourcelink.json

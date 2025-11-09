@@ -13,7 +13,7 @@ public class GetCarsQueryHandler : IRequestHandler<GetCarsQuery, List<Car>>
     }   
     public async Task<List<Car>> Handle(GetCarsQuery request, CancellationToken cancellationToken)
     {
-        var carList = await _repository.Get(request.page, request.pageSize, cancellationToken);
+        var carList = await _repository.Get(request.Page, request.PageSize, cancellationToken);
         return carList;
     }
 }

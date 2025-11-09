@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using MediatR;
-using Application.Users.Commands.CreateNewUser;
+using Application.Users.Commands.RegisterUser;
+using Application.Users.Commands.LoginUser;
 
 namespace CARGAU.Controllers;
 
@@ -13,17 +14,35 @@ public class UsersController : ControllerBase
         => _mediator = mediator;
 
     [HttpPost("/register")]
-    public async Task<IResult> Register([FromBody] CreateUserCommand request, CancellationToken cancellationToken)
+    public async Task<IResult> Register([FromBody] RegisterUserCommand request, CancellationToken cancellationToken)
     {
-        var (rt, jwt) = await _mediator.Send(request, cancellationToken);
+        var (refreshToken, jwt) = await _mediator.Send(request, cancellationToken);
 
         Response.Cookies.Append("auth-cookies", jwt, new CookieOptions()
         {
             Expires = DateTimeOffset.UtcNow.AddMinutes(1)
         });
 
-        return Results.Ok(new {
-            RefreshToken = rt,
+        return Results.Created("users", new
+        {
+            RefreshToken = refreshToken,
+            Jwt = jwt
+        });
+    }
+
+    [HttpPost("/login")]
+    public async Task<IResult> Login([FromBody] LoginUserCommand request, CancellationToken cancellationToken)
+    {
+        var (refreshToken, jwt) = await _mediator.Send(request, cancellationToken);
+
+        Response.Cookies.Append("auth-cookies", jwt, new CookieOptions()
+        {
+            Expires = DateTimeOffset.UtcNow.AddMinutes(1)
+        });
+
+        return Results.Ok(new
+        {
+            RefreshToken = refreshToken,
             Jwt = jwt
         });
     }
