@@ -18,15 +18,17 @@ public class CreateCarCommandHandler : IRequestHandler<CreateCarCommand, Guid>
         var newCar = Car.Create
         (
             Guid.NewGuid(),
+            request.OwnerId,
             request.Brand,
             request.Model,
             request.Color,
             request.Mileage,
             request.YearRelease,
-            request.Price
+            request.Price,
+            request.Condition
         );
-
-        await _repository.Add(newCar, cancellationToken);
+        
+        await _repository.AddAsync(newCar, cancellationToken);
 
         return newCar.Id;
     }

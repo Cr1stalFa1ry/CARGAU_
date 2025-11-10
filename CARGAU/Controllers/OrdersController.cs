@@ -1,6 +1,7 @@
-using System;
 using Application.Orders.Commands.CreateOrder;
 using Application.Orders.Commands.DeleteOrder;
+using Application.Orders.Commands.UpdateStatusOrder;
+using Application.Orders.Queries.GetOrder;
 using Application.Orders.Queries.GetOrders;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -21,9 +22,9 @@ public class OrdersController : ControllerBase
     {
         var orderId = await _mediator.Send(request);
         return Results.CreatedAtRoute(
-            nameof(GetOrders),
-            new { id = orderId },
-            new { OrderId = orderId }
+            routeName: nameof(GetOrderById),
+            routeValues: new { id = orderId },
+            value: new { OrderId = orderId, Message = "Order created successfully" }
         );
     }
 
@@ -39,12 +40,12 @@ public class OrdersController : ControllerBase
         });
     }
 
-    [HttpGet("{id:guid}")]
+    [HttpGet("{id:guid}", Name = nameof(GetOrderById))]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IResult> GetOrder(GetOrdersQuery request, CancellationToken cancellationToken)
+    public async Task<IResult> GetOrderById(Guid id, CancellationToken cancellationToken)
     {
-        var order = await _mediator.Send(request, cancellationToken);
+        var order = await _mediator.Send(new GetOrderQuery { OrderId = id }, cancellationToken);
 
         return Results.Ok(new
         {
@@ -52,21 +53,19 @@ public class OrdersController : ControllerBase
         });
     }
 
-    // [HttpPatch("{orderId}/update-status")]
-    // public async Task<IResult> UpdateStatusOrder(Guid orderId, [FromQuery] UpdateStatusOrder updateOrder)
-    // {
-    //     return await _ordersService.UpdateStatus(orderId, updateOrder.Status)
-    //         ? Results.NoContent() : Results.NotFound("order is not found");
-    // }
+    [HttpPatch("/update-status")]
+    public async Task<IResult> UpdateStatusOrder(UpdateStatusOrderCommand request, CancellationToken cancellationToken)
+    {
+        return await _mediator.Send(request, cancellationToken)
+            ? Results.NoContent() : Results.NotFound("order is not found");
+    }
 
     [HttpDelete("{id:guid}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IResult> DeleteOrderById(
-        [FromQuery] DeleteOrderByIdCommand request,
-        CancellationToken cancellationToken)
+    public async Task<IResult> DeleteOrderById(Guid id, CancellationToken cancellationToken)
     {
-        return await _mediator.Send(request, cancellationToken)
-            ? Results.NoContent() : Results.NotFound("Order is not found");
+        return await _mediator.Send(new DeleteOrderByIdCommand {OrderId = id}, cancellationToken)
+            ? Results.NoContent() : Results.NotFound("order is not found");
     }
 }

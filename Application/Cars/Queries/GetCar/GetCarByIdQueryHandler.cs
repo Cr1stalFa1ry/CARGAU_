@@ -15,6 +15,6 @@ public class GetCarByIdQueryHandler
     }
     public async Task<Car?> Handle(GetCarByIdQuery request, CancellationToken cancellationToken)
     {
-        return await _repository.GetById(request.id, cancellationToken);
+        return await _repository.GetByIdAsync(request.id, cancellationToken);
     }
 }

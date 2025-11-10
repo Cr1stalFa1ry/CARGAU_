@@ -23,6 +23,11 @@ public class TuningStudioDbContext(DbContextOptions<TuningStudioDbContext> optio
         modelBuilder.ApplyConfiguration(new RoleConfiguration());
         modelBuilder.ApplyConfiguration(new ServiceConfiguration());
 
+        modelBuilder
+            .Entity<CarEntity>()
+            .Property(car => car.Condition)
+            .HasConversion<string>();
+
         base.OnModelCreating(modelBuilder);
     }
 }

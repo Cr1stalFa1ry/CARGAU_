@@ -2,6 +2,7 @@ using Domain.Entities;
 using Domain.Interfaces.DbContext;
 using Domain.Models.Order;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.Orders.Commands.CreateOrder;
 
@@ -14,6 +15,16 @@ public class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, Gui
     }
     public async Task<Guid> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
     {
+        var carExists = await _context.Cars
+            .AnyAsync(car => car.Id == request.CarId);
+        if (!carExists)
+            throw new ArgumentException($"Car with ID {request.CarId} not found");
+
+        var clientExists = await _context.Users
+            .AnyAsync(u => u.Id == request.ClientId, cancellationToken);
+        if (!clientExists)
+            throw new ArgumentException($"Client with ID {request.ClientId} not found");
+            
         try
         {
             var orderEntity = new OrderEntity

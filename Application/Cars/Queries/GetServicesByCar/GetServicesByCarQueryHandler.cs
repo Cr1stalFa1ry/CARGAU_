@@ -16,7 +16,7 @@ public class GetServicesByCarQueryHandler : IRequestHandler<GetServicesByCarQuer
         GetServicesByCarQuery request,
         CancellationToken cancellationToken)
     {
-        var listServices = await _repository.GetServicesByCarId(request.id, cancellationToken);
+        var listServices = await _repository.GetServicesByCarIdAsync(request.id, cancellationToken);
         return listServices;
     }
 }

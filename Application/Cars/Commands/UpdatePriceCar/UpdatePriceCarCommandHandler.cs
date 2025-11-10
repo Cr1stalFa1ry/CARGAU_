@@ -22,9 +22,9 @@ public class UpdatePriceCarCommandHandler : IRequestHandler<UpdatePriceCarComman
         try
         {
             var numberRowsUpdated = await _context.Cars
-                .Where(car => car.Id == request.id)
+                .Where(car => car.Id == request.Id)
                 .ExecuteUpdateAsync(car => car
-                    .SetProperty(car => car.Price, request.newPrice)
+                    .SetProperty(car => car.Price, request.NewPrice)
                 );
 
             if (numberRowsUpdated == 0)

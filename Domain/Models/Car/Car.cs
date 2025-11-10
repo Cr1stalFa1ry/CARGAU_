@@ -4,25 +4,30 @@ public class Car
 {
     private Car(
         Guid id,
+        Guid ownerId,
         string brand,
         string model,
         string color,
         int mileage,
         string yearRelease,
-        decimal price
+        decimal price,
+        CarCondition carCondition
         )
     {
         Id = id;
+        OwnerId = ownerId;
         Brand = brand;
         Model = model;
         Color = color;
         Mileage = mileage;
         YearRelease = yearRelease;
         Price = price;
+        Condition = carCondition;
     }
 
     public Car() { }
     public Guid Id { get; set; }
+    public Guid OwnerId { get; set; }
 
     /// <summary>
     /// Основные параметры авто
@@ -38,10 +43,21 @@ public class Car
     /// Состояние автомобиля
     /// </summary>
     public CarCondition Condition { get; set; } = CarCondition.Excellent; 
+    public DateTimeOffset CreatedAt { get; set; } 
+    public DateTimeOffset UpdatedAt { get; set; }
 
-    public Guid OwnerId { get; set; }
 
-    public static Car Create(Guid id, string brand, string model, string color, int mileage, string yearRelease, decimal price)
+    public static Car Create(
+        Guid id,
+        Guid ownerId,
+        string brand,
+        string model,
+        string color,
+        int mileage,
+        string yearRelease,
+        decimal price,
+        CarCondition carCondition
+        )
     {
         /// <summary>
         /// Валидация параметров авто
@@ -55,6 +71,6 @@ public class Car
         if (price >= 0)
         { }
 
-        return new Car(id, brand, model, color, mileage, yearRelease, price);
+        return new Car(id, ownerId, brand, model, color, mileage, yearRelease, price, carCondition);
     }
 }

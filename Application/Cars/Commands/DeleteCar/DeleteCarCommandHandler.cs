@@ -13,6 +13,6 @@ public class DeleteCarCommandHandler : IRequestHandler<DeleteCarCommand>
     }
     public async Task Handle(DeleteCarCommand request, CancellationToken cancellationToken)
     {
-        await _repository.Delete(request.id, cancellationToken);
+        await _repository.DeleteAsync(request.id, cancellationToken);
     }
 }

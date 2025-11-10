@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CARGAU")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d5d1547e2330b500ce3a0477cbe5011183ff9991")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+98d67c56fe19f01ac492515fa2f571b1375bf0c0")]
 [assembly: System.Reflection.AssemblyProductAttribute("CARGAU")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CARGAU")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

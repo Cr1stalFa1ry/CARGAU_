@@ -52,6 +52,7 @@ builder.Services.AddAutoMapper(cfg =>
     cfg.AddProfile<ServiceProfile>();
     cfg.AddProfile<RefreshTokenProfile>();
     cfg.AddProfile<OrderProfile>();
+    cfg.AddProfile<CarProfile>();
 });
 
 builder.Services.AddSwaggerGen();

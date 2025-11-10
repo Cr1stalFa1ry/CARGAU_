@@ -23,22 +23,17 @@ public class CarRepository : ICarRepository
         _context = context;
         _mapper = mapper;
     }
-    public async Task Add(Car car, CancellationToken cancellationToken)
+    public async Task AddAsync(Car car, CancellationToken cancellationToken)
     {
-        var carEntity = new CarEntity
-        {
-            Id = car.Id,
-            Brand = car.Brand,
-            Model = car.Model,
-            YearRelease = car.YearRelease,
-            Price = car.Price
-        };
+        var carEntity = _mapper.Map<CarEntity>(car);
+        carEntity.CreatedAt = DateTimeOffset.UtcNow;
+        carEntity.UpdatedAt = DateTimeOffset.UtcNow;
 
         await _context.Cars.AddAsync(carEntity);
         await _context.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task Delete(Guid id, CancellationToken cancellationToken)
+    public async Task DeleteAsync(Guid id, CancellationToken cancellationToken)
     {
         try
         {
@@ -56,7 +51,7 @@ public class CarRepository : ICarRepository
         }
     }
 
-    public async Task<List<Car>> Get(int page, int pageSize, CancellationToken cancellationToken)
+    public async Task<List<Car>> GetAsync(int page, int pageSize, CancellationToken cancellationToken)
     {
         page = Math.Max(1, page);
         pageSize = Math.Clamp(pageSize, 1, 100);
@@ -71,17 +66,7 @@ public class CarRepository : ICarRepository
                 .ToListAsync(cancellationToken);
 
             var carList = entityList
-                .Select(car =>
-                    Car.Create(
-                        car.Id,
-                        car.Brand,
-                        car.Model,
-                        car.Color,
-                        car.Mileage,
-                        car.YearRelease,
-                        car.Price
-                    )
-                ).ToList();
+                .Select(car => _mapper.Map<Car>(car)).ToList();
 
             return carList;
         }
@@ -102,7 +87,7 @@ public class CarRepository : ICarRepository
         } 
     }
 
-    public async Task<Car?> GetById(Guid id, CancellationToken cancellationToken)
+    public async Task<Car?> GetByIdAsync(Guid id, CancellationToken cancellationToken)
     {
         try
         {
@@ -111,19 +96,7 @@ public class CarRepository : ICarRepository
                 .FirstOrDefaultAsync(car => car.Id == id, cancellationToken)
                 ?? throw new ArgumentNullException($"Car with id: {id} not found(");
 
-            var car = Car.Create
-            (
-                carEntity.Id,
-                carEntity.Brand,
-                carEntity.Model,
-                carEntity.Color,
-                carEntity.Mileage,
-                carEntity.YearRelease,
-                carEntity.Price
-            );
-            
-
-            return car;
+            return _mapper.Map<Car>(carEntity);
         }
         catch (ArgumentNullException ex)
         {
@@ -142,7 +115,7 @@ public class CarRepository : ICarRepository
         } 
     }
 
-    public async Task<List<Service>> GetServicesByCarId(Guid id, CancellationToken cancellationToken)
+    public async Task<List<Service>> GetServicesByCarIdAsync(Guid id, CancellationToken cancellationToken)
     {
         try
         {
@@ -166,12 +139,12 @@ public class CarRepository : ICarRepository
         }
     }
 
-    public Task UpdateOwner(Car updateCar)
+    public async Task UpdateOwnerAsync(Car updateCar, CancellationToken cancellationToken)
     {
         throw new NotImplementedException();
     }
 
-    public Task UpdatePrice(Car updateCar)
+    public async Task UpdatePriceAsync(Car updateCar, CancellationToken cancellationToken)
     {
         throw new NotImplementedException();
     }
