@@ -4,7 +4,7 @@ using Domain.Interfaces.Users.IRefreshTokenProvider;
 using Domain.Interfaces.Users.Services;
 using Domain.Models.User;
 
-namespace Application.Services;
+namespace Application.ServicesForApi;
 
 public class RefreshTokenProvider : IRefreshTokenProvider
 {
@@ -23,7 +23,6 @@ public class RefreshTokenProvider : IRefreshTokenProvider
             Guid.NewGuid(),
             GenerateToken(),
             user.Id,
-            user,
             DateTime.UtcNow.AddDays(7)
         );
     }

@@ -22,28 +22,33 @@ public class ChangeOwnerCarCommandHandler : IRequestHandler<ChangeOwnerCarComman
         try
         {
             var newOnwer = await _context.Users
-                .FirstOrDefaultAsync(user => user.Id == request.newOwnerId)
-                ?? throw new ArgumentNullException($"Пользователь с ID: {request.newOwnerId} не найден.");
+                .FirstOrDefaultAsync(user => user.Id == request.newOwnerId, cancellationToken)
+                ?? throw new ArgumentNullException($"Пользователь {request.newOwnerId} не найден.");
 
             var numberRowsUpdated = await _context.Cars
                 .Where(car => car.Id == request.carId)
                 .ExecuteUpdateAsync(car => car
                     .SetProperty(car => car.Owner, newOnwer)
+                    , cancellationToken
                 );
             if (numberRowsUpdated == 0)
                 throw new ArgumentException("Не удалось поменять владельца автомобиля.");
         }
-        catch (ArgumentNullException ex)
+        catch (OperationCanceledException ex)
         {
-            _logger.LogError(ex.Message);
+            throw new TaskCanceledException("Операция смены владельца авто была отменена", ex);
         }
-        catch (ArgumentException ex)
+        catch (ArgumentNullException)
         {
-            _logger.LogInformation(ex.Message);
+            throw;
+        }
+        catch (DbUpdateException ex)
+        {
+            throw new InvalidOperationException($"Ошибка при изменении владельца авто {request.newOwnerId}", ex);
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex.Message);
-        }        
+            throw new ApplicationException($"Неожиданная ошибка при изменении владельца авто {request.newOwnerId}", ex);
+        }       
     }
 }

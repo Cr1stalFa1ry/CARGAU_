@@ -20,11 +20,15 @@ public class Service
         Summary = summary;
         Type = type;
     }
-    public int Id { get; }
-    public string Name { get; } = string.Empty;
-    public string Summary { get; } = string.Empty;
-    public decimal Price { get; }
-    public TuningType Type { get; }
+
+    public Service() { }
+    public int Id { get; set; }
+    public string Name { get; set; } = string.Empty;
+    public string Summary { get; set; } = string.Empty;
+    public decimal Price { get; set; }
+    public TuningType Type { get; set; }
+    public DateTimeOffset CreatedAt { get; set; }
+    public DateTimeOffset? UpdatedAt { get; set; }
 
     public Service Create(int id, string nameService, decimal price, string summary, TuningType type)
     {

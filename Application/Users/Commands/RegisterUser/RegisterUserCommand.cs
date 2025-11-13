@@ -11,4 +11,4 @@ public record class RegisterUserCommand(
     string FirstName,
     string LastName,
     DateOnly DateOfBirth,
-    int Role) : IRequest<(string, string)>;
+    int RoleId) : IRequest<(string refreshToken, string jwt)>;

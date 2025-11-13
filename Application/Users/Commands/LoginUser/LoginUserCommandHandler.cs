@@ -46,22 +46,18 @@ public class LoginUserCommandHandler
         }
         catch (InvalidOperationException ex)
         {
-            // Пользователь не найден
             throw new ApplicationException("Ошибка входа: " + ex.Message);
         }
         catch (UnauthorizedAccessException ex)
         {
-            // Неверный пароль
             throw new ApplicationException("Ошибка авторизации: " + ex.Message);
         }
         catch (OperationCanceledException)
         {
-            // Операция отменена (например, запрос прерван)
             throw;
         }
         catch (Exception ex)
         {
-            // Любая непредвиденная ошибка
             throw new ApplicationException("Произошла внутренняя ошибка при входе.", ex);
         }
     }

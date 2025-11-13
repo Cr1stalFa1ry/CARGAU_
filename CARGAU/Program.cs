@@ -1,20 +1,18 @@
-using MediatR;
-using System.Reflection;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using CARGAU.Jwt;
-using CARGAU.Extensions;
-using Infrastructure.Repositories;
-using Infrastructure.Context;
-using Application.Cars.Commands.CreateCar;
-using Application.Services;
 using Domain.Interfaces.Repositoties;
 using Domain.Interfaces.Users.Jwt;
 using Domain.Interfaces.Users.PasswordHasher;
-using Presentation.Mappers;
 using Domain.Interfaces.Users.Services;
 using Domain.Interfaces.Repositories;
 using Domain.Interfaces.Users.IRefreshTokenProvider;
+using Application.Cars.Commands.CreateCar;
+using Application.ServicesForApi;
+using Application.Services;
+using Infrastructure.Repositories;
+using Infrastructure.Context;
+using CARGAU.Jwt;
+using CARGAU.Extensions;
+using Presentation.Mappers;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 

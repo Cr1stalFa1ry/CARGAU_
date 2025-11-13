@@ -1,6 +1,6 @@
 using Domain.Interfaces.Users.PasswordHasher;
 
-namespace Application.Services;
+namespace Application.ServicesForApi;
 
 public class PasswordHasher : IPasswordHasher
 {

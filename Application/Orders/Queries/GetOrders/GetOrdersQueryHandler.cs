@@ -11,8 +11,8 @@ public class GetOrdersQueryHandler : IRequestHandler<GetOrdersQuery, List<Order>
 {
     private readonly ITuningStudioDbContext _context;
     private readonly IMapper _mapper;
-    private int Page;
-    private int PageSize;
+    private int _page;
+    private int _pageSize;
     public GetOrdersQueryHandler(ITuningStudioDbContext context, IMapper mapper)
     {
         _context = context;
@@ -20,15 +20,15 @@ public class GetOrdersQueryHandler : IRequestHandler<GetOrdersQuery, List<Order>
     }
     public async Task<List<Order>> Handle(GetOrdersQuery request, CancellationToken cancellationToken)
     {
-        Page = Math.Max(1, request.Page);
-        PageSize = Math.Clamp(request.PageSize, 1, 100); // всегда от 1 до 100
+        _page = Math.Max(1, request.Page);
+        _pageSize = Math.Clamp(request.PageSize, 1, 100); // всегда от 1 до 100
         try
         {
             var orderEntities = await _context.Orders
                 .AsNoTracking()
                 .OrderBy(order => order.Id)
-                .Skip((Page - 1) * PageSize)
-                .Take(PageSize)
+                .Skip((_page - 1) * _pageSize)
+                .Take(_pageSize)
                 .ToListAsync(cancellationToken);
 
             var orders = orderEntities

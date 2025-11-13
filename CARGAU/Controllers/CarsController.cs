@@ -6,18 +6,19 @@ using Application.Cars.Queries.GetServicesByCar;
 using Application.Cars.Queries.GetCar;
 using Application.Cars.Queries.GetCars;
 using Application.Cars.Commands.UpdatePriceCar;
+using Application.Cars.Commands.ChangeOwnerCar;
 
 namespace CARGAU.Controllers;
 
 [ApiController]
-[Route("cars")]
+[Route("api/cars")]
 public class CarsController : ControllerBase
 {
     private readonly IMediator _mediator;
     public CarsController(IMediator mediator)
         => _mediator = mediator;
 
-    [HttpPost("/add-car")]
+    [HttpPost("add-car")]
     public async Task<IResult> CreateCar(
         [FromBody] CreateCarCommand request,
         CancellationToken cancellationToken)
@@ -37,7 +38,7 @@ public class CarsController : ControllerBase
         return Results.Ok(car);
     }
 
-    [HttpGet("/list-cars")]
+    [HttpGet("list-cars")]
     public async Task<IResult> GetCars(
         [FromQuery] int page,
         [FromQuery] int pageSize,
@@ -61,6 +62,14 @@ public class CarsController : ControllerBase
         CancellationToken cancellationToken)
     {
         await _mediator.Send(request, cancellationToken);
+        return Results.NoContent();
+    }
+
+    [HttpPatch("{carId:guid}/owner/change")]
+    public async Task<IResult> ChangeOwnerCar(Guid carId, [FromQuery] Guid ownerId, CancellationToken cancellationToken)
+    {
+        await _mediator.Send(new ChangeOwnerCarCommand(carId, ownerId), cancellationToken);
+
         return Results.NoContent();
     }
 

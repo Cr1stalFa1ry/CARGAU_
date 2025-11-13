@@ -2,7 +2,7 @@ using Domain.Interfaces.Users.Services;
 using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
 
-namespace Application.Services;
+namespace Application.ServicesForApi;
 
 public class UserContextService : IUserContextService
 {
@@ -21,10 +21,10 @@ public class UserContextService : IUserContextService
 
     public Guid? GetCurrentUserId()
     {
-        var user = _httpContextAccessor.HttpContext?.User; // предварительно вытаскиваем пользователя
+        var user = _httpContextAccessor.HttpContext?.User;
 
         if (user == null) 
-            throw new ArgumentException("user not found"); // исключение, информирующее об отсутствии пользователя
+            throw new ArgumentNullException("Пользователь не существует.");
 
         var userIdClaim = user.FindFirst("userId")?.Value;
         return userIdClaim != null ? Guid.Parse(userIdClaim) : null;

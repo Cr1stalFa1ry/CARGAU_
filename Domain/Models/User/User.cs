@@ -21,7 +21,7 @@ public class User
     public User(Guid id, string userName,
                 string email, Roles role,
                 string phoneNumber, string firstName,
-                string lastName, DateOnly dateOfBirth)
+                string lastName, DateOnly? dateOfBirth)
     {
         Id = id;
         UserName = userName;
@@ -52,7 +52,7 @@ public class User
     public DateOnly? DateOfBirth { get; set; }
 
     /// <summary>
-    /// Метод для создания объекта пользователя при создании jwt 
+    /// Метод для создания объекта пользователя при создании jwt и refresh token
     /// </summary>
     public static User Create(Guid id, string userName, string email, Roles role)
     {
@@ -66,7 +66,7 @@ public class User
                 Guid id, string userName,
                 string email, Roles role,
                 string phoneNumber, string firstName,
-                string lastName, DateOnly dateOfBirth)
+                string lastName, DateOnly? dateOfBirth)
     {
         return new User(id, userName, email, role, phoneNumber, firstName, lastName, dateOfBirth);
     }

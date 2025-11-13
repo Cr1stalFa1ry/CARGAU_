@@ -10,7 +10,6 @@ public class RefreshTokenProfile : Profile
     public RefreshTokenProfile()
     {
         CreateMap<RefreshToken, RefreshTokenEntity>()
-            .ForMember(dest => dest.User, opt => opt.Ignore())
-            .ForMember(dest => dest.ExpiresOnUtc, opt => opt.MapFrom(src => DateTime.UtcNow));
+            .ForMember(dest => dest.User, opt => opt.Ignore());
     }
 }

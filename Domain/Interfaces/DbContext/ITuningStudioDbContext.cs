@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Domain.Entities;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace Domain.Interfaces.DbContext;
 
@@ -13,4 +14,5 @@ public interface ITuningStudioDbContext
     public DbSet<RefreshTokenEntity> RefreshTokens { get; set; }
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
+    DatabaseFacade Database { get; set; }
 }
