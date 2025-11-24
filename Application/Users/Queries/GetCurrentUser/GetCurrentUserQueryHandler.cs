@@ -28,6 +28,10 @@ public class GetCurrentUserQueryHandler : IRequestHandler<GetCurrentUserQuery, U
         try
         {
             var currentUserId = _contextService.GetCurrentUserId();
+            if (currentUserId == null)
+            {
+                throw new ArgumentNullException("Текущего пользователя нету, нужно войти в профиль.");
+            }
 
             var userEntity = await _dbContext.Users
                 .AsNoTracking()

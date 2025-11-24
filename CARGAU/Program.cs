@@ -11,6 +11,7 @@ using Infrastructure.Repositories;
 using Infrastructure.Context;
 using CARGAU.Jwt;
 using CARGAU.Extensions;
+using CARGAU.Middlewares;
 using Presentation.Mappers;
 using System.Reflection;
 
@@ -56,6 +57,8 @@ builder.Services.AddAutoMapper(cfg =>
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 // использование swagger
 app.UseSwagger();
